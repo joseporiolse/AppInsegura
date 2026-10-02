@@ -13,10 +13,9 @@ namespace AppInsegura
 
         public static void Main(string[] args)
         {
-            CargarUsuariosDeEjemplo();
+
 
             Console.WriteLine("=== Gestor de Usuarios y Partidas ===");
-            Console.WriteLine("(usuarios de prueba: admin/admin1234, ana/ana2024)");
             Console.WriteLine();
 
             bool salir = false;
@@ -65,12 +64,6 @@ namespace AppInsegura
             }
 
             Console.WriteLine("Hasta luego.");
-        }
-
-        private static void CargarUsuariosDeEjemplo()
-        {
-            auth.Registrar("admin", "admin1234", "admin");
-            auth.Registrar("ana", "ana2024", "jugador");
         }
 
         private static void MostrarMenu()
@@ -145,7 +138,14 @@ namespace AppInsegura
 
         private static void PanelAdministracion()
         {
-            Console.WriteLine("=== PANEL DE ADMINISTRACIÓN ===");
+            if(usuarioActual == null || usuarioActual.Rol != "admin")
+            {
+                Console.WriteLine("No tienes permisos para acceder a esta opcion");
+                return;
+
+            }
+
+            Console.WriteLine("===Prueba -  PANEL DE ADMINISTRACIÓN ===");
             Console.WriteLine("Lista de usuarios registrados:");
             foreach (Usuario u in baseDatos.ListarTodos())
             {
