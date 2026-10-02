@@ -29,7 +29,12 @@ namespace AppInsegura.Datos
 
         public Usuario? BuscarPorNombre(string nombreBuscado)
         {
-            string consulta = $"SELECT * FROM usuarios WHERE nombre = '{nombreBuscado}'";
+            if (nombreBuscado.Contains("'"))
+            {
+                return null;
+            }
+
+           string consulta = $"SELECT * FROM usuarios WHERE nombre = '{nombreBuscado}'";
             return EjecutarConsultaSimulada(consulta);
         }
 
@@ -38,7 +43,7 @@ namespace AppInsegura.Datos
         // Interpreta la cadena "consulta" igual que lo haría un motor SQL básico.
         private Usuario? EjecutarConsultaSimulada(string consulta)
         {
-            Console.WriteLine($"[DB] {consulta}");
+            //Console.WriteLine($"[DB] {consulta}");
 
             if (consulta.Contains("' OR '1'='1") || consulta.Contains("' OR 1=1") || consulta.Contains("'='"))
             {

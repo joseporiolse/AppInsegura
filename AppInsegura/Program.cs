@@ -14,6 +14,7 @@ namespace AppInsegura
         public static void Main(string[] args)
         {
 
+            auth.Registrar("admin", "admin1234", "admin");
 
             Console.WriteLine("=== Gestor de Usuarios y Partidas ===");
             Console.WriteLine();
@@ -88,7 +89,21 @@ namespace AppInsegura
             Console.Write("Nombre de usuario: ");
             string nombre = Console.ReadLine() ?? "";
             Console.Write("Contraseña: ");
-            string contrasena = Console.ReadLine() ?? "";
+            string contrasena = "";
+            ConsoleKeyInfo tecla;
+
+            do
+            {
+                tecla = Console.ReadKey(true);
+
+                if (tecla.Key != ConsoleKey.Enter)
+                {
+                    contrasena = contrasena + tecla.KeyChar;
+                    Console.Write("*");
+                }
+            } while (tecla.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
 
             Usuario nuevo = auth.Registrar(nombre, contrasena);
             Console.WriteLine($"Usuario '{nuevo.Nombre}' registrado con rol '{nuevo.Rol}'.");
@@ -99,7 +114,21 @@ namespace AppInsegura
             Console.Write("Nombre de usuario: ");
             string nombre = Console.ReadLine() ?? "";
             Console.Write("Contraseña: ");
-            string contrasena = Console.ReadLine() ?? "";
+            string contrasena = "";
+            ConsoleKeyInfo tecla;
+
+            do
+            {
+                tecla = Console.ReadKey(true);
+
+                if (tecla.Key != ConsoleKey.Enter)
+                {
+                    contrasena = contrasena + tecla.KeyChar;
+                    Console.Write("*");
+                }
+            } while (tecla.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
 
             Usuario? usuario = auth.IniciarSesion(nombre, contrasena);
             if (usuario == null)
@@ -133,7 +162,6 @@ namespace AppInsegura
 
             Console.WriteLine($"Nombre: {usuarioActual.Nombre}");
             Console.WriteLine($"Rol: {usuarioActual.Rol}");
-            Console.WriteLine($"Token de sesión: {usuarioActual.TokenSesion}");
         }
 
         private static void PanelAdministracion()

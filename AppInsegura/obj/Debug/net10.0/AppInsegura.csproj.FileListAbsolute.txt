@@ -30,3 +30,4 @@ C:\Users\joseporiolse\Documents\github\AppInsegura\AppInsegura\obj\Debug\net10.0
 C:\Users\joseporiolse\Documents\github\AppInsegura\AppInsegura\obj\Debug\net10.0\AppInsegura.sourcelink.json
 C:\Users\joseporiolse\Documents\github\AppInsegura\AppInsegura\obj\Debug\net10.0\AppInsegura.genruntimeconfig.cache
 C:\Users\joseporiolse\Documents\github\AppInsegura\AppInsegura\obj\Debug\net10.0\ref\AppInsegura.dll
+C:\Users\joseporiolse\Documents\github\AppInsegura\AppInsegura\obj\Debug\net10.0\AppInseg.029646E8.Up2Date

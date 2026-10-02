@@ -46,17 +46,13 @@ namespace AppInsegura.Servicios
 
             usuario.TokenSesion = GenerarTokenSesion();
 
-            Console.WriteLine($"[LOG] Login correcto -> usuario: {usuario.Nombre}, token: {usuario.TokenSesion}");
-
-            GuardarSesionEnDisco(usuario);
-
             return usuario;
         }
 
         private string CalcularHash(string contrasena)
         {
-            using MD5 md5 = MD5.Create();
-            byte[] bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(contrasena));
+            using SHA256 sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(contrasena));
             return Convert.ToHexString(bytes);
         }
 
@@ -64,11 +60,6 @@ namespace AppInsegura.Servicios
         {
             var random = new Random();
             return random.Next(100000, 999999).ToString();
-        }
-
-        private void GuardarSesionEnDisco(Usuario usuario)
-        {
-            File.WriteAllText("sesion.txt", $"{usuario.Nombre}:{usuario.TokenSesion}");
         }
     }
 }
