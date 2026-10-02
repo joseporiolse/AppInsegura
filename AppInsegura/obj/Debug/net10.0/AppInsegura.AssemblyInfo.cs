@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AppInsegura")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+640a5a8c17e49e034d2ba05dd744b46bb3b41f89")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af62b4f8fb839f5d7062aacb8a78524ab87c4043")]
 [assembly: System.Reflection.AssemblyProductAttribute("AppInsegura")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AppInsegura")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
