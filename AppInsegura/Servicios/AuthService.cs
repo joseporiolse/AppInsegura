@@ -53,10 +53,20 @@ namespace AppInsegura.Servicios
 
         private string CalcularHash(string contrasena)
         {
-            // Hemos cambiado el MD5 por SHA256 porque MD5 no tiene encriptacion
-            using SHA256 sha256 = SHA256.Create();
-            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(contrasena));
-            return Convert.ToHexString(bytes);
+            // Convertimos la contraseña a bytes para poder procesarla.
+            byte[] bytesContrasena = Encoding.UTF8.GetBytes(contrasena);
+
+            // Creamos SHA256 para generar un hash de la contraseña.
+            using (SHA256 algoritmoHash = SHA256.Create())
+            {
+                // Calculamos el hash usando los bytes de la contraseña.
+                byte[] bytesHash = algoritmoHash.ComputeHash(bytesContrasena);
+
+                // Convertimos el resultado a texto hexadecimal.
+                string hashEnTexto = Convert.ToHexString(bytesHash);
+
+                return hashEnTexto;
+            }
         }
 
         private string GenerarTokenSesion()
