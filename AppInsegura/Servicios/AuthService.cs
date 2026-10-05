@@ -78,8 +78,13 @@ namespace AppInsegura.Servicios
 
         private string GenerarTokenSesion()
         {
-            var random = new Random();
-            return random.Next(100000, 999999).ToString();
+            // Creamos 32 bytes aleatorios usando un generador seguro.
+            byte[] bytesToken = RandomNumberGenerator.GetBytes(32);
+
+            // Convertimos los bytes a texto hexadecimal para guardar el token.
+            string token = Convert.ToHexString(bytesToken);
+
+            return token;
         }
     }
 }
