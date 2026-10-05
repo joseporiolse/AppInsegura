@@ -29,7 +29,7 @@ namespace AppInsegura.Datos
 
         public Usuario? BuscarPorNombre(string nombreBuscado)
         {
-            if (nombreBuscado.Contains("'"))
+            if (nombreBuscado.Contains("'")) // Controlamos la entrada para evitar que se salten la busqueda con OR
             {
                 return null;
             }
@@ -44,6 +44,8 @@ namespace AppInsegura.Datos
         private Usuario? EjecutarConsultaSimulada(string consulta)
         {
             //Console.WriteLine($"[DB] {consulta}");
+
+            // No mostramos la consulta interna al usuario.
 
             if (consulta.Contains("' OR '1'='1") || consulta.Contains("' OR 1=1") || consulta.Contains("'='"))
             {

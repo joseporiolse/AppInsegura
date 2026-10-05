@@ -44,13 +44,16 @@ namespace AppInsegura.Servicios
                 return null;
             }
 
-            usuario.TokenSesion = GenerarTokenSesion();
+            usuario.TokenSesion = GenerarTokenSesion(); 
+            
+            //no mostramos token
 
             return usuario;
         }
 
         private string CalcularHash(string contrasena)
         {
+            // Hemos cambiado el MD5 por SHA256 porque MD5 no tiene encriptacion
             using SHA256 sha256 = SHA256.Create();
             byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(contrasena));
             return Convert.ToHexString(bytes);

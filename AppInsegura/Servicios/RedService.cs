@@ -7,7 +7,7 @@ namespace AppInsegura.Servicios
     public class RedService
     {
         private const string ApiKey = "sk_live_51Hj29aKlmZ9QwErTyUiOpAsDfGh";
-        private const string UrlServidor = "https://servidor-local/puntuaciones";
+        private const string UrlServidor = "https://servidor-local/puntuaciones"; //Cambiamos de http a https para proteger los datos enviados
 
         public void EnviarPuntuacion(string nombreUsuario, int puntuacion)
         {
@@ -25,7 +25,7 @@ namespace AppInsegura.Servicios
         private async Task EnviarPuntuacionAsync(string nombreUsuario, int puntuacion)
         {
             using var cliente = new HttpClient();
-            string url = $"{UrlServidor}?usuario={nombreUsuario}&puntos={puntuacion}";
+            string url = $"{UrlServidor}?usuario={nombreUsuario}&puntos={puntuacion}"; //No mostramos el token
 
             Console.WriteLine($"Enviando puntuación a: {url}");
             HttpResponseMessage respuesta = await cliente.GetAsync(url);

@@ -92,13 +92,13 @@ namespace AppInsegura
             string contrasena = "";
             ConsoleKeyInfo tecla;
 
-            do
+            do // Ocultamos la contraseña mientras escribimos con *
             {
                 tecla = Console.ReadKey(true);
 
                 if (tecla.Key != ConsoleKey.Enter)
                 {
-                    contrasena = contrasena + tecla.KeyChar;
+                    contrasena = contrasena + tecla.KeyChar; 
                     Console.Write("*");
                 }
             } while (tecla.Key != ConsoleKey.Enter);
@@ -160,20 +160,21 @@ namespace AppInsegura
                 return;
             }
 
+            // Hemos eliminado la opción que mostrara el token
             Console.WriteLine($"Nombre: {usuarioActual.Nombre}");
             Console.WriteLine($"Rol: {usuarioActual.Rol}");
         }
 
         private static void PanelAdministracion()
         {
-            if(usuarioActual == null || usuarioActual.Rol != "admin")
+            if(usuarioActual == null || usuarioActual.Rol != "admin") //Evitamos que cualquiera que no sea admin pueda ver la lista de usuarios
             {
                 Console.WriteLine("No tienes permisos para acceder a esta opcion");
                 return;
 
             }
 
-            Console.WriteLine("===Prueba -  PANEL DE ADMINISTRACIÓN ===");
+            Console.WriteLine("=== PANEL DE ADMINISTRACIÓN ===");
             Console.WriteLine("Lista de usuarios registrados:");
             foreach (Usuario u in baseDatos.ListarTodos())
             {
