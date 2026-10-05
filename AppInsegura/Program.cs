@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using AppInsegura.Datos;
 using AppInsegura.Modelos;
 using AppInsegura.Servicios;
@@ -14,7 +15,8 @@ namespace AppInsegura
         public static void Main(string[] args)
         {
 
-            auth.Registrar("admin", "admin1234", "admin");
+            CargarUsuariosDePrueba();
+            
 
             Console.WriteLine("=== Gestor de Usuarios y Partidas ===");
             Console.WriteLine();
@@ -65,6 +67,42 @@ namespace AppInsegura
             }
 
             Console.WriteLine("Hasta luego.");
+        }
+
+        private static void CargarUsuariosDePrueba()
+        {
+            string ruta = Path.GetFullPath(
+                Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "..", "..", "..",
+                    "README-alumnado.md"
+                )
+            );
+
+            if (!File.Exists(ruta))
+            {
+                Console.WriteLine("No se ha encontrado el README.");
+                return;
+            }
+
+            string[] lineas = File.ReadAllLines(ruta);
+
+            foreach (string linea in lineas)
+            {
+                string[] datos = linea.Split('|');
+
+                if (datos.Length >= 2)
+                {
+                    string nombre = datos[1].Trim();
+                    string contrasena = datos[2].Trim();
+                    string rol = datos[3].Trim();
+
+                    if (nombre != "Usuario" && !nombre.Contains("---"))
+                    {
+                        auth.Registrar(nombre, contrasena, rol);
+                    }
+                }
+            }
         }
 
         private static void MostrarMenu()
