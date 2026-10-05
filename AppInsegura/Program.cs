@@ -71,35 +71,47 @@ namespace AppInsegura
 
         private static void CargarUsuariosDePrueba()
         {
-            string ruta = Path.GetFullPath(
-                Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "..", "..", "..",
-                    "README-alumnado.md"
-                )
-            );
+            string carpeta = AppContext.BaseDirectory; //Obtenim la direccio de la carpeta on se executa el programa
 
-            if (!File.Exists(ruta))
+            string ruta = Path.Combine(carpeta, "README-alumnado.md"); //busquem el readme dins de la carpeta
+
+            while (!File.Exists(ruta)) //Si no trobem el readme, anem pujant de carpetes i tornem a buscar en aquella
+            {
+                DirectoryInfo? padre = Directory.GetParent(carpeta);
+
+                if (padre == null) //Si no existeix una carpeta pare deixem de buscar
+                {
+                    break;
+                }
+
+                carpeta = padre.FullName; //pujem a la carpeta pare
+
+                ruta = Path.Combine(carpeta, "README-alumnado.md"); //tornem a crear la ruta del readme
+            }
+
+            if (!File.Exists(ruta)) //Si no trobem el readme enviem un missatge i sortim
             {
                 Console.WriteLine("No se ha encontrado el README.");
                 return;
             }
 
-            string[] lineas = File.ReadAllLines(ruta);
+            string[] lineas = File.ReadAllLines(ruta); //llegim totes les linees del readme
 
-            foreach (string linea in lineas)
+            foreach (string linea in lineas) //recorrem cada linea del readme
             {
-                string[] datos = linea.Split('|');
+                string[] datos = linea.Split('|'); //separem les linees utilitzan |
 
-                if (datos.Length >= 2)
+                if (datos.Length >= 4) //comprobem que la linea tingui suficients datos per a poder llegir: el usuari, rol i contrasenya
                 {
-                    string nombre = datos[1].Trim();
+                    string nombre = datos[1].Trim(); //obtenim nom de usuari
+
                     string contrasena = datos[2].Trim();
+
                     string rol = datos[3].Trim();
 
-                    if (nombre != "Usuario" && !nombre.Contains("---"))
+                    if (nombre != "Usuario" && !nombre.Contains("---")) //ignorem la capçalera
                     {
-                        auth.Registrar(nombre, contrasena, rol);
+                        auth.Registrar(nombre, contrasena, rol); //Registrem
                     }
                 }
             }
