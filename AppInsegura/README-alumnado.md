@@ -25,6 +25,12 @@ Si usas Visual Studio o Visual Studio Code, basta con abrir la carpeta
 
 Al arrancar, la aplicación crea automáticamente dos usuarios:
 
+
+<!-- USUARIOS_PRUEBA -->
+admin|admin1234|admin
+ana|ana2024|jugador
+<!-- FIN_USUARIOS_PRUEBA -->
+
 | Usuario | Contraseña | Rol |
 |---|---|---|
 | admin | admin1234 | admin |
