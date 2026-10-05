@@ -53,19 +53,26 @@ namespace AppInsegura.Servicios
 
         private string CalcularHash(string contrasena)
         {
-            // Convertimos la contraseña a bytes para poder procesarla.
-            byte[] bytesContrasena = Encoding.UTF8.GetBytes(contrasena);
-
-            // Creamos SHA256 para generar un hash de la contraseña.
-            using (SHA256 algoritmoHash = SHA256.Create())
+            // Validamos si la contraseña no es nula ni está vacía
+            if (!string.IsNullOrEmpty(contrasena))
             {
-                // Calculamos el hash usando los bytes de la contraseña.
-                byte[] bytesHash = algoritmoHash.ComputeHash(bytesContrasena);
+                // Convertimos la contraseña a bytes
+                byte[] bytesContrasena = Encoding.UTF8.GetBytes(contrasena);
 
-                // Convertimos el resultado a texto hexadecimal.
-                string hashEnTexto = Convert.ToHexString(bytesHash);
+                // Creamos la herramienta SHA256
+                using (SHA256 algoritmoHash = SHA256.Create())
+                {
+                    // Calculamos el hash
+                    byte[] bytesHash = algoritmoHash.ComputeHash(bytesContrasena);
 
-                return hashEnTexto;
+                    // Convertimos el resultado a texto hexadecimal y lo devolvemos
+                    return Convert.ToHexString(bytesHash);
+                }
+            }
+            else
+            {
+                // Si la contraseña está vacía o es nula, devolvemos un texto vacío
+                return string.Empty;
             }
         }
 
