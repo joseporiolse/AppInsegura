@@ -18,6 +18,16 @@ cd AppInsegura
 dotnet run
 ```
 
+Antes de ejecutar la aplicación, configura la clave de API en PowerShell:
+
+```powershell
+$env:APPINSEGURA_API_KEY = "tu-clave-de-api"
+dotnet run
+```
+
+La clave se obtiene del entorno y se envía en la cabecera `X-API-Key`; no debe
+escribirse directamente en el código ni compartirse en el repositorio.
+
 Si usas Visual Studio o Visual Studio Code, basta con abrir la carpeta
 `AppInsegura` y ejecutar el proyecto.
 
