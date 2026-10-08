@@ -10,7 +10,10 @@ namespace AppInsegura.Servicios
 
         public void EnviarPuntuacion(string nombreUsuario, int puntuacion)
         {
-            string? apiKey = Environment.GetEnvironmentVariable("APPINSEGURA_API_KEY");
+            string? apiKey = Environment.GetEnvironmentVariable( // Obtenemos la API de las variables de entorno del usuario de Windows sin tener que escribir la clave
+    "APPINSEGURA_API_KEY",
+    EnvironmentVariableTarget.User
+);
 
             if (string.IsNullOrWhiteSpace(apiKey))
             {

@@ -69,49 +69,40 @@ namespace AppInsegura
             Console.WriteLine("Hasta luego.");
         }
 
-        private static void CargarUsuariosDePrueba()
+        private static void CargarUsuariosDePrueba() 
         {
-            string carpeta = AppContext.BaseDirectory; //Obtenim la direccio de la carpeta on se executa el programa
+            string? ruta = Environment.GetEnvironmentVariable( // Obtenemos la ruta del README desde las variables de entorno del usuario,
+                "APPINSEGURA_README_PATH",
+                EnvironmentVariableTarget.User
+            );
 
-            string ruta = Path.Combine(carpeta, "README-alumnado.md"); //busquem el readme dins de la carpeta
-
-            while (!File.Exists(ruta)) //Si no trobem el readme, anem pujant de carpetes i tornem a buscar en aquella
+            if (string.IsNullOrEmpty(ruta)) // Comprobamos que la variable de entorno esta configurada.
             {
-                DirectoryInfo? padre = Directory.GetParent(carpeta);
-
-                if (padre == null) //Si no existeix una carpeta pare deixem de buscar
-                {
-                    break;
-                }
-
-                carpeta = padre.FullName; //pujem a la carpeta pare
-
-                ruta = Path.Combine(carpeta, "README-alumnado.md"); //tornem a crear la ruta del readme
+                Console.WriteLine("No se ha configurado la ruta del README.");
+                return;
             }
 
-            if (!File.Exists(ruta)) //Si no trobem el readme enviem un missatge i sortim
+            if (!File.Exists(ruta))  // Comprobamos que el archivo exista.
             {
                 Console.WriteLine("No se ha encontrado el README.");
                 return;
             }
 
-            string[] lineas = File.ReadAllLines(ruta); //llegim totes les linees del readme
+            string[] lineas = File.ReadAllLines(ruta); // Leemos las líneas del README para obtener los usuarios de prueba.
 
-            foreach (string linea in lineas) //recorrem cada linea del readme
+            foreach (string linea in lineas)
             {
-                string[] datos = linea.Split('|'); //separem les linees utilitzan |
+                string[] datos = linea.Split('|'); // Separamos cada línea
 
-                if (datos.Length >= 4) //comprobem que la linea tingui suficients datos per a poder llegir: el usuari, rol i contrasenya
+                if (datos.Length >= 4) // Comprobamos que la línea tenga suficientes datos antes de acceder a ellos.
                 {
-                    string nombre = datos[1].Trim(); //obtenim nom de usuari
-
+                    string nombre = datos[1].Trim();
                     string contrasena = datos[2].Trim();
-
                     string rol = datos[3].Trim();
 
-                    if (nombre != "Usuario" && !nombre.Contains("---")) //ignorem la capçalera
+                    if (nombre != "Usuario" && !nombre.Contains("---"))  // Ignoramos
                     {
-                        auth.Registrar(nombre, contrasena, rol); //Registrem
+                        auth.Registrar(nombre, contrasena, rol); // Registramos el usuario y la contraseña sera guardada como hash
                     }
                 }
             }
