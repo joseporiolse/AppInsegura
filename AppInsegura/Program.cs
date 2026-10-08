@@ -139,21 +139,7 @@ namespace AppInsegura
             Console.Write("Nombre de usuario: ");
             string nombre = Console.ReadLine() ?? "";
             Console.Write("Contraseña: ");
-            string contrasena = "";
-            ConsoleKeyInfo tecla;
-
-            do // Ocultamos la contraseña mientras escribimos con *
-            {
-                tecla = Console.ReadKey(true);
-
-                if (tecla.Key != ConsoleKey.Enter)
-                {
-                    contrasena = contrasena + tecla.KeyChar; 
-                    Console.Write("*");
-                }
-            } while (tecla.Key != ConsoleKey.Enter);
-
-            Console.WriteLine();
+            string contrasena = LeerContrasena();
 
             Usuario nuevo = auth.Registrar(nombre, contrasena);
             Console.WriteLine($"Usuario '{nuevo.Nombre}' registrado con rol '{nuevo.Rol}'.");
@@ -164,21 +150,7 @@ namespace AppInsegura
             Console.Write("Nombre de usuario: ");
             string nombre = Console.ReadLine() ?? "";
             Console.Write("Contraseña: ");
-            string contrasena = "";
-            ConsoleKeyInfo tecla;
-
-            do
-            {
-                tecla = Console.ReadKey(true);
-
-                if (tecla.Key != ConsoleKey.Enter)
-                {
-                    contrasena = contrasena + tecla.KeyChar;
-                    Console.Write("*");
-                }
-            } while (tecla.Key != ConsoleKey.Enter);
-
-            Console.WriteLine();
+            string contrasena = LeerContrasena();
 
             Usuario? usuario = auth.IniciarSesion(nombre, contrasena);
             if (usuario == null)
@@ -189,6 +161,38 @@ namespace AppInsegura
 
             usuarioActual = usuario;
             Console.WriteLine($"Bienvenido, {usuario.Nombre}.");
+        }
+
+        private static string LeerContrasena()
+        {
+            string contrasena = "";
+            ConsoleKeyInfo tecla;
+
+            while (true)
+            {
+                tecla = Console.ReadKey(true);
+
+                if (tecla.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                else if (tecla.Key == ConsoleKey.Backspace)
+                {
+                    if (contrasena.Length > 0)
+                    {
+                        contrasena = contrasena.Substring(0, contrasena.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                }
+                else if (!char.IsControl(tecla.KeyChar))
+                {
+                    contrasena = contrasena + tecla.KeyChar;
+                    Console.Write("*");
+                }
+            }
+
+            Console.WriteLine();
+            return contrasena;
         }
 
         private static void BuscarUsuario()
