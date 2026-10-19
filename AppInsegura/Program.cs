@@ -132,8 +132,15 @@ namespace AppInsegura
             Console.Write("Contraseña: ");
             string contrasena = LeerContrasena();
 
-            Usuario nuevo = auth.Registrar(nombre, contrasena);
-            Console.WriteLine($"Usuario '{nuevo.Nombre}' registrado con rol '{nuevo.Rol}'.");
+            while (contrasena.Length <= 7)
+            {
+                Console.WriteLine("Escriba una contraseña valida con un minimo de 8 caracteres: ");
+                Console.Write("Contraseña: ");
+                contrasena = LeerContrasena();
+            }
+
+                Usuario nuevo = auth.Registrar(nombre, contrasena);
+                Console.WriteLine($"Usuario '{nuevo.Nombre}' registrado con rol '{nuevo.Rol}'.");
         }
 
         private static void IniciarSesion()
